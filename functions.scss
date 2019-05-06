@@ -1,0 +1,123 @@
+// number functions
+body {
+    width: percentage(0.2); // 20%
+    height: round(10.4px); // 10px
+    margin-left: ceil(10.4px); // 11px
+    margin-right: floor(10.4px); // 10px
+    margin-bottom: abs(-10px) // 10px
+}
+
+/*
+type-of(100px) // number
+type-of(absd) // string
+type-of("accc") // string
+type-of(true) // bool
+type-of(#fff) // color
+type-of(blue) // color
+*/
+
+
+// unit(100) => ""
+// unit(100px) => "px"
+// unit(3em) => "em"
+// unit(10px * 5em) => "em*px"
+// unit(10px * 5em / 30cm / 1rem) => "em*px/cm*rem"
+
+// unitless(100) => true
+// unitless(100px) => false
+
+// comparable(2px, 1px) => true
+// comparable(100px, 3em) => false
+// comparable(10px, 3mm) => true
+
+// quote("foo") => "foo"
+// quote(foo) => "foo"
+
+// unquote("foo") => foo
+// unquote(foo) => foo
+
+
+// length(10px) => 1
+// length(10px 20px 30px) => 3 
+// length((width: 10px, height: 20px)) => 2
+
+// nth(10px 20px 30px, 1) => 10px
+// nth((Helvetica, Arial, sans-serif), 3) => sans-serif
+
+// index(1px solod red, solid) => 2
+// index(1px solid red, dashed) => null
+// index((width: 10px, height: 20px), (height: 20px)) => 2
+
+// append(10px 20px, 30px) // 10px 20px 30px
+// append((blue, red), green) // blue red green
+// append(10px 20px, 30px 40px) // 10px 20px (30px 40px)
+// append(10px, 20px, comma) // 10px, 20px
+// append((blue, red), green, space) // blue red green
+
+// join(10px 20px, 30px 40px) // 10px 20px 30px 40px
+// join(10px, 20px, comma) // 10px 20px
+// join((blue, red), (#abc, #def)) // blue, red, #abc, #def
+
+// zip(1px 1px 3px, solid dashed solid, red green blue)
+// 1px solid red, 1px dashed green, 3px solid blue
+
+// map-get(("foo": 1, "bar": 2), "foo") // 1
+// map-get(("foo": 1, "bar": 2), "baz") // null
+
+$base-color: #ad141e;
+
+.adjust-hue {
+    // diminish the original color
+    color: adjust-hue($base-color, 20%);
+    // #ad3d14
+}
+
+p {
+    .saturate {
+        // brighter than the original
+        color: saturate($base-color, 20%);
+    }
+    .desturate {
+        // darker than the origianl
+        color: desaturate($base-color, 20%);
+    }
+}
+
+
+p {
+    .darken {
+        color: darken($base-color, 10%);
+    }
+    .lighten {
+        color: lighten($base-color, 10%);
+    }
+}
+
+.rgba {
+    color: rgba($base-color, .7);
+}
+
+$base-color: rgba(255, 0, 0, 0.5);
+
+.opacify {
+    // alpha +
+    color: opacify($base-color, 0.3);
+}
+
+.transparentize {
+    // alpha -
+    color: transparentize($base-color, 0.25);
+}
+
+
+$base-color: #ad141e;
+
+.tint {
+    // white +
+    color: tint($base-color, 10%);
+}
+
+.shade {
+    // black +
+    color: shade($base-color, 10%);
+}

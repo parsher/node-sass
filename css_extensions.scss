@@ -1,0 +1,243 @@
+#navbar {
+    width: 80%;
+    height: 23px;
+}
+
+#navbar ul {
+    list-style-type: none;
+}
+
+#navbar li {
+    float: left;
+}
+
+#navbar li a {
+    font-weight: bold;
+}
+
+#navbar {
+    width: 80%;
+    height: 23px;
+    ul {list-style-type: none; }
+    li {
+        float: left;
+        a {font-weight: bold; }
+    }
+}
+
+
+.myAnchor {
+    color: blue;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &:visited {
+        color: purple;
+    }
+}
+
+
+.funky {
+    font: {
+        family: fantasy;
+        size: 30em;
+        weight: bold;
+    }
+}
+
+
+// import partial files and do not compile one by one.
+@import 'foo.scss';
+@import 'foo';
+@import 'foo', 'bar';
+$family: unquote("Droid+Sans");
+@import url("http://font.googleapis.com/css?family=#{$family}");
+
+
+.error {
+    border: 1px #f00;
+    background-color: blue;
+}
+
+.seriousError {
+    @extend .error;
+
+    border-width: 3px;
+    border-color: darkblue;
+}
+
+/*
+recommend not to use extend.
+
+.error, .seriousError {
+  border: 1px #f00;
+  background-color: blue;
+}
+
+.seriousError {
+  border-width: 3px;
+  border-color: darkblue;
+}
+*/
+
+
+// if (condition, if_true, if_false)
+
+$type: ocean;
+p {
+    color: if($type == ocean, blue, black);
+}
+
+
+$type: monster;
+p {
+    @if $type == ocean {
+        color: blue;
+    } @else if $type == matador {
+        color: red;
+    } @else {
+        color: black;
+    }
+}
+
+/*
+p {
+    color: green;
+} 
+*/
+
+@for $i from 1 through 3 {
+    .item-#{$i} {width: 2em * $i;}
+}
+
+/*
+.item-1 {
+  width: 2em;
+}
+.item-2 {
+  width: 4em;
+}
+.item-3 {
+  width: 6em;
+}*/
+
+@each $animal in puma, sea-slug, egret, salamander {
+    .#{$animal}-icon {
+        background-image: url('/images/#{$animal}.png');
+    }
+}
+
+@each $header, $size in (h1: 2em, h2: 1.5em, h3: 1.2em) {
+    #{$header} {
+        font-size: $size;
+    }
+}
+
+
+$i: 6;
+@while $i > 0 {
+    .item-#{$i} {
+        width: 2em * $i;
+    }
+    $i: $i - 2;
+}
+
+
+@mixin circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.box {
+    @include circle;
+
+    background: #f00;
+}
+
+/* 
+.box {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f00;
+}
+*/
+
+// mixin can have arguments, also default value
+@mixin circle($size: 10px) {
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+}
+
+.box {
+    @include circle(100px);
+    background: #f00;
+}
+
+@mixin vendorPrefix($property, $value) {
+    @each $prefix in -webkit-, -moz-, -ms-, -o-, '' {
+        #{$prefix}#{$property}: $value;
+    }
+}
+
+.border-radius {
+    @include vendorPrefix(transition, 0.5s);
+}
+
+/*
+.border_radius {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+*/
+
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacityIE: $opacity * 100;
+    filter: alpha(opacity=$opacityIE);
+}
+
+.box {
+    @include opacity(0.5);
+}
+
+//.box {
+//  opacity: 0.5;
+//  /* All modern browsers */
+//  filter: alpha(opacity=50);
+//  /* For IE5~IE9 */
+//}
+
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+    position: $position;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+
+.box {
+    @include position(absolute, $top: 10px, $left: 50%);
+}
+
+
+// function
+$grid-width: 40px;
+$gutter-width: 10px;
+@function grid-width($n) {
+    @return $n * $grid-width + ($n - 1) * $gutter-width;
+}
+
+// width: 240px;
+#sidebar {width: grid-width(5);}
+
+// comment -> removed at the css files
+/* multiline comment -> remain at the css files */ 
